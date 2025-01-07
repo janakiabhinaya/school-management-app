@@ -20,6 +20,19 @@ function Teacherdata(){
           navigate(`/edit-teacher/${teacherId}`);
         }
       };
+      const handleDelete = async (teacherId) => {
+        try {
+          await axios.delete(`http://localhost:5000/api/auth/deleteteacher/${teacherId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          alert("teacher deleted successfully!");
+          navigate("/admin");
+        } catch (err) {
+          setError(err.response?.data?.message || "Failed to delete class.");
+        }
+      };
     const fetchTeacher = async () => {
         const authToken = localStorage.getItem("authToken");
         if (!authToken) {
@@ -70,7 +83,6 @@ function Teacherdata(){
       if (!teacher) {
         return <div className="text-gray-600 text-center mt-5">Loading teacher data...</div>;
       }
-     
 return(
       <div className="bg-gray-100 min-h-screen py-8 px-6">
       <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
@@ -88,7 +100,14 @@ return(
         >
           Edit Profile
         </button>
-
+        <button onClick={() => handleDelete(teacherId)}
+          className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition">delete profile</button>
+        <button  className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition"
+        onClick={()=>{
+           localStorage.removeItem("teacherId");
+           localStorage.removeItem("token");
+           navigate("/");
+        }}>logout</button>
         <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">Your Schedule</h3>
         <div>
           {schedules.length > 0 ? (

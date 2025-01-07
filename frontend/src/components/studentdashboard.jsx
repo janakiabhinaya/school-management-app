@@ -71,7 +71,19 @@ function StudentDashboard() {
   const handleEditProfile = () => {
     navigate(`/edit-student/${studentId}`)
   };
-  
+  const handleDelete = async (studentId) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/auth/deletestudent/${studentId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      alert("student deleted successfully!");
+      navigate("/");
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to delete class.");
+    }
+  };
   return (
     <div className="bg-gray-100 min-h-screen py-8 px-6">
       {studentData ? (
@@ -98,7 +110,16 @@ function StudentDashboard() {
           <button onClick={ handleEditProfile}   className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition">
            edit profile
           </button>
-
+          <button onClick={() => handleDelete(studentId)} className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition">
+           delete profile
+          </button>
+          <button  onClick={()=>{
+           localStorage.removeItem("studentId");
+           localStorage.removeItem("token");
+           navigate("/");
+        }} className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition">
+           logout
+          </button>
           <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">Your Schedule</h3>
           <div>
             {schedules.length > 0 ? (
