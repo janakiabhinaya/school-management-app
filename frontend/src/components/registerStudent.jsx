@@ -43,14 +43,10 @@ function RegisterStudent() {
   
     try {
       const classResponse = await axios.get(
-        `http://localhost:5000/api/auth/getclasses/${adminId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `http://localhost:5000/api/auth/filteredclasses/${adminId}`,
       );
-      setClasses(classResponse.data.classes);
+      setClasses(classResponse.data);
+      console.log(classes);
     } catch (err) {
       setError(err.response?.data?.message || "Failed to fetch classes.");
     }

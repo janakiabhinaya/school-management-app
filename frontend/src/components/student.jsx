@@ -34,7 +34,7 @@ function Student() {
     if (!formData.password) {
       newErrors.password = "Password is required.";
     } 
-    
+
     if (!isLogin) {
       if (!formData.name) {
         newErrors.name = "Name is required.";
@@ -117,7 +117,7 @@ function Student() {
   useEffect(() => {
     if (formData.school) {
       axios
-        .get(`http://localhost:5000/api/auth/fetchclasses/${formData.school}`) // Replace with your API endpoint
+        .get(`http://localhost:5000/api/auth/filteredclasses/${formData.school}`) // Replace with your API endpoint
         .then((response) => {
           setClasses(response.data);
         })

@@ -2,7 +2,7 @@ const express = require("express");
 const { registerUser, loginUser, registerStudent, registerTeacher, classcreation, fetchClasses, fetchclassdata, 
     profileedit, getProfileData, editclass, Getstudents, classfee, getstudent, 
     getTeachersBySchoolId, updatedata, getteacher, createSchedule, getschedules, getschedulebyid, updateschedulebyid,
-    updateTeacher, feesanalysis, fetchschools, fetchClassesbyid, loginstudent, fetchstudentbyId,
+    updateTeacher, feesanalysis, fetchschools, fetchClassesbyid, loginstudent, fetchstudentbyId, filteredclasses,
     fetchallclasseswithschool, updatestudent,schedules, teacherregister, loginteacher, getschedulesofteacher} = require("../controllers/authController");
 const authenticateToken = require("../middleware/auth");
 
@@ -17,7 +17,6 @@ router.post("/adminlogin", loginUser);
 router.post("/student/register", authenticateToken, registerStudent);
 router.post("/teacher/register", authenticateToken, registerTeacher);
 router.post("/createclass", authenticateToken, classcreation);
-router.get("/getclasses/:schoolId", authenticateToken, fetchClasses);
 router.get("/getclassesdata/:schoolId", authenticateToken, fetchallclasseswithschool);
 router.get("/profile/:adminId", authenticateToken, getProfileData);
 router.put("/editprofile/:adminId",authenticateToken,profileedit);
@@ -37,6 +36,8 @@ router.patch('/schedule/:id',authenticateToken, updateschedulebyid);
 router.get("/analytics/:schoolId",authenticateToken, feesanalysis);
 router.get('/schools', fetchschools);
 router.get("/fetchclasses/:schoolId", fetchClassesbyid);
+router.get("/getclasses/:schoolId", authenticateToken, fetchClasses);
+router.get("/filteredclasses/:schoolId", filteredclasses);
 router.post("/register-student", registerStudent); 
 router.post("/login-student", loginstudent);
 router.get("/getstudent/:id", authenticateToken, fetchstudentbyId);

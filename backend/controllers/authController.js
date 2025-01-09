@@ -401,14 +401,35 @@ const getstudent = async (req, res) => {
     if (!student) {
       return res.status(404).json({ message: "Student not found" });
     }
-    // Fetch classes related to the student's school
-    const classes = await Class.find({ school: student.school }, 'className studentFees year');
-    res.json({ student, classes });
-    console.log(student,classes)
+
+    // Fetch all classes related to the student's school
+    const classes = await Class.find({ school: student.school }, "className studentFees year classsize");
+
+    // Filter classes by comparing class size with the number of students
+    const filteredClasses = await Promise.all(
+      classes.map(async (classData) => {
+        const studentCount = await Student.countDocuments({
+          classId: classData._id,
+        });
+
+        // Include the class only if the student count is less than the class size
+        if (studentCount < classData.classsize) {
+          return classData;
+        }
+
+        return null; // Exclude classes where the count exceeds or equals the class size
+      })
+    );
+
+    // Remove null values from the filteredClasses array
+    const result = filteredClasses.filter((classData) => classData !== null);
+
+    res.json({ student, classes: result });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
-}
+};
+
 // fetch student data by id
 const fetchstudentbyId = async (req, res) => {
   const studentId = req.params.id; // Use correct destructuring
@@ -450,6 +471,39 @@ const fetchstudentbyId = async (req, res) => {
   }
 };
 
+//fetch classes by id and filter based on class size
+const filteredclasses = async (req, res) => {
+  try {
+      const { schoolId } = req.params;
+
+      // Fetch all classes for the given school ID
+      const classes = await Class.find({ school: schoolId });
+
+      // Filter classes by comparing class size with the number of students
+      const filteredClasses = await Promise.all(
+          classes.map(async (classData) => {
+              const studentCount = await Student.countDocuments({
+                  classId: classData._id,
+              });
+
+              // Include the class only if the student count is less than the class size
+              if (studentCount < classData.classsize) {
+                  return classData;
+              }
+
+              return null; // Exclude classes where the count exceeds or equals the class size
+          })
+      );
+
+      // Remove null values from the filteredClasses array
+      const result = filteredClasses.filter((classData) => classData !== null);
+
+      res.status(200).json(result);
+  } catch (error) {
+      console.error("Error fetching and filtering classes:", error);
+      res.status(500).json({ error: "Internal server error" });
+  }
+}
 
 // edit student data
 const updatedata = async (req, res) => {
@@ -864,4 +918,4 @@ module.exports = { registerUser, profileedit, loginUser, registerStudent, regist
   fetchClasses, fetchclassdata, getProfileData, editclass, Getstudents, updatedata, classfee, 
   getTeachersBySchoolId, getstudent, getteacher, updateTeacher, createSchedule, getschedules, getschedulebyid,
   updateschedulebyid, feesanalysis, fetchschools, updatestudent, fetchClassesbyid, loginstudent, fetchstudentbyId, 
-  schedules, fetchallclasseswithschool, teacherregister, loginteacher, getschedulesofteacher};
+  schedules, fetchallclasseswithschool, teacherregister, loginteacher, getschedulesofteacher, filteredclasses};
