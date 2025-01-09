@@ -104,7 +104,7 @@ function Admin() {
                 value={formData.name}
                 onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
+                // required
               />
             </div>
 
@@ -116,7 +116,7 @@ function Admin() {
                 name="schoolName"
                 value={formData.schoolName}
                 onChange={handleChange}
-                required
+                // required
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -131,7 +131,7 @@ function Admin() {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            required
+            // required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -144,7 +144,7 @@ function Admin() {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            required
+            // required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
