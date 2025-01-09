@@ -236,7 +236,8 @@ function RegisterStudent() {
         setError(null);
         setShowPopup(false);
         setStudents((prev) => [...prev, response.data.student]);
-        fetchClassesAndStudents();
+        fetchClasses();
+        fetchStudents();
       }
     } catch (err) {
       setError(err.response?.data?.message || "Failed to register student.");
@@ -268,10 +269,11 @@ function RegisterStudent() {
       >
         Add Student
       </button>
-      {error && <p className="text-red-500 mt-4">{error}</p>}
+      {/* {error && <p className="text-red-500 mt-4">{error}</p>} */}
       <h2 className="text-2xl font-bold mb-4">Students List</h2>
       <div className="flex flex-wrap gap-4 mt-6">
-  {students.map((student) => (
+      {students.length > 0 ? (
+      students.map((student) => (
     <div
       key={student._id}
       className="bg-white p-4 border border-gray-300 rounded-lg shadow-md w-60"
@@ -279,7 +281,7 @@ function RegisterStudent() {
       <div className="font-semibold text-lg">{student.name}</div>
       <div className="text-sm text-gray-600">{student.gender}</div>
       <div className="text-sm text-gray-600">
-        Class: {student.classId?.className || "N/A"} year: {student.classId?.year || "N/A"}  
+        Class: {student.classId?.className || ""} year: {student.classId?.year || ""}  
       </div>
       <div className="text-sm text-gray-600">Email: {student.email}</div>
       <div className="text-sm text-gray-600">Contact: {student.contact}</div>
@@ -299,7 +301,10 @@ function RegisterStudent() {
         </button>
       </div>
     </div>
-  ))}
+  ))
+) : (
+  <div className="text-center text-gray-600 mt-4">No students found</div>
+)}
 </div>
 
 
@@ -447,7 +452,18 @@ function RegisterStudent() {
               <div className="flex justify-between mt-4">
                 <button
                   type="button"
-                  onClick={() => setShowPopup(false)}
+                  onClick={() => {
+                    setShowPopup(false);
+                    setFormErrors({
+                      name: "",
+                      gender: "",
+                      dateOfBirth: "",
+                      contact: "",
+                      email: "",
+                      password: "",
+                      classId: "",
+                    })
+                  }}
                   className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500"
                 >
                   Cancel

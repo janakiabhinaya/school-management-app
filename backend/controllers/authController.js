@@ -256,16 +256,38 @@ const fetchclassdata = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const classData = await Class.findById(id).populate('students teachers'); // Assuming relationships exist
+    // Fetch the class data by its ID
+    const classData = await Class.findById(id);
+
     if (!classData) {
       return res.status(404).json({ message: 'Class not found' });
     }
-    res.json(classData);
+
+    // Fetch all students whose classId matches the class ID
+    const students = await Student.find({ classId: id })
+      .select('name email contact gender');  // Select only required fields
+
+    // Fetch all schedules related to the class ID
+    const schedules = await Schedule.find({ class: id })
+      .select('subject timings teacher');  // Select relevant fields for schedules
+
+    // Fetch all teachers related to the schedules
+    const teacherIds = schedules.map(schedule => schedule.teacher);
+    const teachers = await Teacher.find({ _id: { $in: teacherIds } })
+      .select('name email contact gender');  // Select relevant teacher details
+
+    // Return all the fetched data
+    res.json({
+      classData,        // Class details
+      students,         // Student details for the class
+      schedules,        // Schedule details for the class
+      teachers,         // Teacher details for each schedule
+    });
   } catch (error) {
     console.error('Error fetching class data:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
-}
+};
 // edit class data
 const editclass = async (req, res) => {
   const { id } = req.params;
@@ -363,7 +385,6 @@ const registerStudent = async (req, res) => {
 
     // Save the student to the database
     await newStudent.save();
-    console.log(newStudent);
     res.status(201).json({
       message: "Student registered successfully!",
       student: newStudent,

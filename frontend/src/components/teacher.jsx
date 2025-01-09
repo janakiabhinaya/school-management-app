@@ -17,7 +17,49 @@ function Teacher() {
   });
   const [isLogin, setIsLogin] = useState(false); // For toggling between register and login
   const [error, setError] = useState(null);
+  const [formErrors, setFormErrors] = useState({});
   const [schools, setSchools] = useState([]);
+  const validateForm = () => {
+    const errors = {};
+    if (!formData.email) {
+      errors.email = "Email is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      errors.email = "Invalid email format.";
+    }
+
+    if (!formData.password) {
+      errors.password = "Password is required.";
+    }
+
+    if (!isLogin) {
+      if (!formData.name) {
+        errors.name = "Name is required.";
+      }
+
+      if (!formData.salary) {
+        errors.salary = "Salary is required.";
+      }
+
+      if (!formData.gender) {
+        errors.gender = "Gender is required.";
+      }
+
+      if (!formData.dateOfBirth) {
+        errors.dateOfBirth = "Date of birth is required.";
+      }
+
+      if (!formData.contact) {
+        errors.contact = "Contact is required.";
+      }
+
+      if (!formData.school) {
+        errors.school = "School is required.";
+      }
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/auth/schools") // Replace with your API endpoint to fetch school names
@@ -38,6 +80,7 @@ function Teacher() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     const endpoint = isLogin
       ? "http://localhost:5000/api/auth/login-teacher" // Endpoint for teacher login
       : "http://localhost:5000/api/auth/register-teacher"; // Endpoint for teacher registration
@@ -104,6 +147,7 @@ function Teacher() {
             onChange={handleChange}
             className="w-full p-2 border rounded-md"
           />
+           {formErrors.email && <p className="text-red-500 text-sm">{formErrors.email}</p>}
         </div>
         <div>
           <label htmlFor="password" className="block text-sm font-medium">Password:</label>
@@ -115,6 +159,7 @@ function Teacher() {
             onChange={handleChange}
             className="w-full p-2 border rounded-md"
           />
+           {formErrors.password && <p className="text-red-500 text-sm">{formErrors.password}</p>}
         </div>
         </div>
         {!isLogin && (
@@ -130,7 +175,7 @@ function Teacher() {
             onChange={handleChange}
              className= "w-full p-2 border rounded-md"
           />
-           {/* {formErrors.name && <span className="text-red-500 text-sm">{formErrors.name}</span>} */}
+           {formErrors.name && <p className="text-red-500 text-sm">{formErrors.name}</p>}
         </div>
             <div>
               <label htmlFor="salary" className="block text-sm font-medium">Salary:</label>
@@ -142,6 +187,7 @@ function Teacher() {
                 onChange={handleChange}
                 className="w-full p-2 border rounded-md"
               />
+               {formErrors.salary && <p className="text-red-500 text-sm">{formErrors.salary}</p>}
             </div>
             </div>
             <div className="flex">
@@ -158,6 +204,7 @@ function Teacher() {
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
+              {formErrors.gender && <p className="text-red-500 text-sm">{formErrors.gender}</p>}
             </div>
             <div>
                 <label htmlFor="schoolId" className="block font-medium">School:</label>
@@ -175,6 +222,7 @@ function Teacher() {
                     </option>
                   ))}
                 </select>
+                {formErrors.school && <p className="text-red-500 text-sm">{formErrors.school}</p>}
               </div>
               </div>
               <div className="flex">
@@ -188,6 +236,7 @@ function Teacher() {
                 onChange={handleChange}
                 className="w-full p-2 border rounded-md"
               />
+              {formErrors.dateOfBirth && <p className="text-red-500 text-sm">{formErrors.dateOfBirth}</p>}
             </div>
             <div>
               <label htmlFor="contact" className="block text-sm font-medium">Contact:</label>
@@ -199,6 +248,7 @@ function Teacher() {
                 onChange={handleChange}
                 className="w-full p-2 border rounded-md"
               />
+               {formErrors.contact && <p className="text-red-500 text-sm">{formErrors.contact}</p>}
             </div>
             </div>
           </>

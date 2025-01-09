@@ -171,8 +171,8 @@ function RegisterTeacher() {
           Authorization: `Bearer ${token}`,
         },
       });
-      alert("student deleted successfully!");
-      fetchTeachers();
+      alert("teacher deleted successfully!");
+      await fetchTeachers();
     } catch (err) {
       setError(err.response?.data?.message || "Failed to delete class.");
     }
@@ -230,7 +230,7 @@ function RegisterTeacher() {
             className= "w-full p-2 border rounded-md"
           />
           {formErrors.dateOfBirth && (
-            <span className="error">{formErrors.dateOfBirth}</span>
+            <span className="text-red-500 text-sm">{formErrors.dateOfBirth}</span>
           )}
         </div>
         <div>
@@ -244,7 +244,7 @@ function RegisterTeacher() {
             className= "w-full p-2 border rounded-md"
           />
            {formErrors.contact && (
-            <span className="error">{formErrors.contact}</span>
+            <span className="text-red-500 text-sm">{formErrors.contact}</span>
           )}
         </div>
         <div>
@@ -257,7 +257,7 @@ function RegisterTeacher() {
             onChange={handleChange}
             className= "w-full p-2 border rounded-md"
           />
-          {formErrors.email && <span className="error">{formErrors.email}</span>}
+          {formErrors.email && <span className="text-red-500 text-sm">{formErrors.email}</span>}
         </div>
         <div className="flex justify-around">
         <div>
@@ -271,7 +271,7 @@ function RegisterTeacher() {
             className= "w-full p-2 border rounded-md"
           />
            {formErrors.password && (
-            <span className="error">{formErrors.password}</span>
+            <span className="text-red-500 text-sm">{formErrors.password}</span>
           )}
         </div>
         <div>
@@ -285,7 +285,7 @@ function RegisterTeacher() {
             className= "w-full p-2 border rounded-md"
           />
           {formErrors.salary && (
-            <span className="error">{formErrors.salary}</span>
+            <span className="text-red-500 text-sm">{formErrors.salary}</span>
           )}
         </div>
         </div>
@@ -301,7 +301,8 @@ function RegisterTeacher() {
       <div className="mt-8">
         <h3 className="text-lg font-bold mb-4">Teachers List</h3>
         <div className="grid gap-4">
-        {teachers.map((teacher) => (
+        {teachers.length > 0 ? (
+        teachers.map((teacher) => (
           <div key={teacher._id} className="p-4 border rounded-md shadow-md flex justify-between items-center">
             <p>{teacher.name}</p>
             <div className="flex justify-between space-x-2">
@@ -315,9 +316,12 @@ function RegisterTeacher() {
         </button>
         </div>
           </div>
-        ))}
+        ))
+      ) : (
+        <p className="text-gray-500 text-center">No teachers found for this school</p>
+      )}
       </div>
-      {error && <p className="text-red-500 mt-4">{error}</p>}
+      {/* {error && <p className="text-red-500 mt-4">{error}</p>} */}
     </div>
     </div>
   );

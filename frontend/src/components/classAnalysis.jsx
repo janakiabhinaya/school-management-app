@@ -61,8 +61,8 @@ const ClassAnalytics = ({ classId, onBack }) => {
       {classData ? (
         <div className="space-y-4">
           <div className="text-xl font-semibold">
-            <p><span className="font-bold">Class Name:</span> {classData.className}</p>
-            <p><span className="font-bold">Year:</span> {classData.year}</p>
+            <p><span className="font-bold">Class Name:</span> {classData.classData.className}</p>
+            <p><span className="font-bold">Year:</span> {classData.classData.year}</p>
           </div>
 
           <div>
@@ -88,8 +88,8 @@ const ClassAnalytics = ({ classId, onBack }) => {
           </div>
 
           <div>
-            <p className="font-bold">Fees:</p>
-            <p>${classData.studentFees}</p>
+            <p className="font-bold">class Fees:</p>
+            <p>₹ {classData.classData.studentFees}</p>
           </div>
 
           <div className="mt-6 w-full max-w-xl mx-auto">

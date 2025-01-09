@@ -25,7 +25,7 @@ const FeeAnalysisComponent = () => {
 
       const teachersData = response.data.teachers;
       const studentsData = response.data.students;
-      console.log(response.data);
+      // console.log(response.data);
       setTeachers(teachersData);
       setStudents(studentsData);
       let totalSalaries = 0;

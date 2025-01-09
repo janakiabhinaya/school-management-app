@@ -23,7 +23,7 @@ router.get("/profile/:adminId", authenticateToken, getProfileData);
 router.put("/editprofile/:adminId",authenticateToken,profileedit);
 router.get("/students/:schoolId", authenticateToken, Getstudents);
 router.patch("/updateclass/:id", authenticateToken, editclass);
-router.get("/class/:classId/fee",authenticateToken,classfee);
+router.get("/class/:classId/fee", classfee);
 router.get("/student/:id", getstudent);
 router.patch("/student/:id", authenticateToken, updatedata);
 router.get("/classes/:id", fetchclassdata);

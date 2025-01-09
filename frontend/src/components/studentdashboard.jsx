@@ -92,7 +92,7 @@ function StudentDashboard() {
           <p className="text-lg text-gray-600 mb-2">Email: {studentData.student.email}</p>
           {studentData.classData ? (
     <>
-      <p className="text-lg text-gray-600 mb-2">Class: {studentData.classData.className}</p>
+      <p className="text-lg text-gray-600 mb-2">Class: {studentData.classData.className} - year: {studentData.classData.year}</p>
       <p className="text-lg text-gray-600 mb-4">Class Fees: {studentData.classData.studentFees}</p>
     </>
   ) : (

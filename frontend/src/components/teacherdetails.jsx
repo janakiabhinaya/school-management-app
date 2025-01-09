@@ -114,7 +114,7 @@ return(
             schedules.map((schedule) => (
               <div key={schedule._id} className="bg-gray-50 p-4 rounded-lg shadow-sm mb-4">
                 <p className="text-lg text-gray-700 mb-2">Subject: {schedule.subject}</p>
-                <p className="text-lg text-gray-700 mb-2">Teacher: {schedule.teacherName}</p>
+                <p className="text-lg text-gray-700 mb-2">class: {schedule.class.className} - year: {schedule.class.year}</p>
                 <div className="timings">
                   {schedule.timings.map((time, index) => (
                     <div key={index} className="bg-gray-200 p-3 rounded-lg mb-2">

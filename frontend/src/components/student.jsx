@@ -21,6 +21,60 @@ function Student() {
   const [classes, setClasses] = useState([]);
   const [feeDetails, setFeeDetails] = useState({ amount: "", date: "" });
   const [isLogin, setIsLogin] = useState(false);
+  const [errors, setErrors] = useState({});
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.email) {
+      newErrors.email = "Email is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Invalid email format.";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Password is required.";
+    } 
+    
+    if (!isLogin) {
+      if (!formData.name) {
+        newErrors.name = "Name is required.";
+      }
+
+      if (!formData.email) {
+        newErrors.email = "email is required.";
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        newErrors.email = "Invalid email format.";
+      }
+  
+
+      if (!formData.password) {
+        newErrors.password = "password is required.";
+      }
+
+      if (!formData.gender) {
+        newErrors.gender = "Gender is required.";
+      }
+
+      if (!formData.dateOfBirth) {
+        newErrors.dateOfBirth = "Date of birth is required.";
+      }
+
+      if (!formData.contact) {
+        newErrors.contact = "Contact is required.";
+      }
+
+      if (!formData.school) {
+        newErrors.school = "School selection is required.";
+      }
+
+      if (!formData.classId) {
+        newErrors.classId = "Class selection is required.";
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
   useEffect(() => {
     const fetchClassFee = async () => {
       if (!formData.classId) {
@@ -106,6 +160,7 @@ function Student() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     try {
       if (isLogin) {
         // Login logic
@@ -163,8 +218,8 @@ function Student() {
                     value={formData.email}
                     onChange={handleChange}
                     className="w-full p-2 border rounded-md"
-                    required
                   />
+                   {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
                 </div>
 
                 <div>
@@ -176,8 +231,8 @@ function Student() {
                     value={formData.password}
                     onChange={handleChange}
                     className="w-full p-2 border rounded-md"
-                    required
                   />
+                  {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
                 </div>
               </>
             ) : (
@@ -193,6 +248,7 @@ function Student() {
                   onChange={handleChange}
                   className="w-full p-2 border rounded-md"
                 />
+                 {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
               </div>
               <div>
                 <label htmlFor="gender" className="block font-medium">Gender:</label>
@@ -207,6 +263,7 @@ function Student() {
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                 </select>
+                {errors.gender && <p className="text-red-500 text-sm">{errors.gender}</p>}
               </div>
             </div>
             <div className="flex justify-around">
@@ -220,6 +277,7 @@ function Student() {
                   onChange={handleChange}
                   className="w-full p-2 border rounded-md"
                 />
+                {errors.dateOfBirth && <p className="text-red-500 text-sm">{errors.dateOfBirth}</p>}
               </div>
               <div>
                 <label htmlFor="contact" className="block font-medium">Contact:</label>
@@ -231,6 +289,7 @@ function Student() {
                   onChange={handleChange}
                   className="w-full p-2 border rounded-md"
                 />
+                 {errors.contact && <p className="text-red-500 text-sm">{errors.contact}</p>}
               </div>
             </div>
             <div className="flex justify-around">
@@ -244,6 +303,7 @@ function Student() {
                 onChange={handleChange}
                 className="w-full p-2 border rounded-md"
               />
+              {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
             </div>
             <div>
                 <label htmlFor="password" className="block font-medium">Password:</label>
@@ -255,6 +315,7 @@ function Student() {
                   onChange={handleChange}
                   className="w-full p-2 border rounded-md"
                 />
+                {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
               </div>
               </div>
               <div className="flex justify-around">
@@ -274,6 +335,7 @@ function Student() {
                     </option>
                   ))}
                 </select>
+                {errors.school && <p className="text-red-500 text-sm">{errors.school}</p>}
               </div>
             <div>
               <label htmlFor="classId" className="block font-medium">Class:</label>
@@ -292,6 +354,7 @@ function Student() {
                   </option>
                 ))}
               </select>
+              {errors.classId && <p className="text-red-500 text-sm">{errors.classId}</p>}
             </div>
             </div>
             <div>

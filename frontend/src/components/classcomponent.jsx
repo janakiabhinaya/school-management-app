@@ -192,7 +192,7 @@ const ClassComponent = ({ onViewClass }) => {
             <h3 className="text-xl font-semibold mb-4">
               {editingClassId ? "Edit Class" : "Create New Class"}
             </h3>
-            {error && <p className="text-red-500 mb-2">{error}</p>}
+            {/* {error && <p className="text-red-500 mb-2">{error}</p>} */}
             <form onSubmit={editingClassId ? handleUpdateClass : handleCreateClass} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium">

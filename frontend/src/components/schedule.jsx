@@ -42,9 +42,10 @@ const ScheduleComponent = () => {
     }));
   };
   const handleEditClick = (id) => {
+    setIsEditFormOpen(true);
     setEditingScheduleId(id);
     fetchScheduleById(id);
-    setIsEditFormOpen(true);
+    
   };
   const fetchClasses = async () => {
 
@@ -117,7 +118,7 @@ const ScheduleComponent = () => {
       setFormData({
         school: schedule.school || schoolId,
         class: schedule.class._id || "",
-        teacher: schedule.teacher._id || "",
+        teacher: schedule.teacher?._id || "",
         subject: schedule.subject || "",
         timings: schedule.timings || [{ startTime: "", endTime: "" }],
       });
@@ -208,7 +209,7 @@ const ScheduleComponent = () => {
       return; // If validation fails, don't submit the form
     }
     try {
-      console.log("Form data being sent:", formData); // Debug log
+      // console.log("Form data being sent:", formData); // Debug log
       const response = await axios.post(
         "http://localhost:5000/api/auth/schedule",
         formData,
@@ -394,7 +395,7 @@ const handleDeleteschedule = async (scheduleId) => {
                 Class: {schedule.class.className}, year-{schedule.class.year}
               </div>
               <div className="text-sm text-gray-600">
-                Teacher: {schedule.teacher.name}
+                Teacher: {schedule.teacher && schedule.teacher.name ? schedule.teacher.name : ""}
               </div>
               <div className="text-sm text-gray-600">
                 Subject: {schedule.subject}
@@ -448,7 +449,7 @@ const handleDeleteschedule = async (scheduleId) => {
                 <label className="block">Teacher:</label>
                 <select
                   name="teacher"
-                  value={formData.teacher}
+                  value={formData.teacher || ""}
                   onChange={handleChange}
                   className="w-full p-2 border rounded"
                 >
