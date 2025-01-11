@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../constant.js";
 
 function RegisterTeacher() {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ function RegisterTeacher() {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/auth/teachers/${schoolId}`,
+        `${BACKEND_URL}/api/auth/teachers/${schoolId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -130,7 +131,7 @@ function RegisterTeacher() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/teacher/register",
+        `${BACKEND_URL}/api/auth/teacher/register`,
         {
           ...formData,
           schoolId, // Send schoolId from localStorage
@@ -166,7 +167,7 @@ function RegisterTeacher() {
       return;
     }
     try {
-      await axios.delete(`http://localhost:5000/api/auth/deleteteacher/${teacherId}`, {
+      await axios.delete(`${BACKEND_URL}/api/auth/deleteteacher/${teacherId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

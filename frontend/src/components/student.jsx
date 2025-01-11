@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
+import { BACKEND_URL } from "../constant.js";
 
 function Student() {
   const navigate = useNavigate();
@@ -85,7 +86,7 @@ function Student() {
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/auth/class/${formData.classId}/fee`,
+          `${BACKEND_URL}/api/auth/class/${formData.classId}/fee`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -104,7 +105,7 @@ function Student() {
   // Fetch schools on component mount
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/auth/schools") // Replace with your API endpoint to fetch school names
+      .get(`${BACKEND_URL}/api/auth/schools`) // Replace with your API endpoint to fetch school names
       .then((response) => {
         setSchools(response.data);
       })
@@ -117,7 +118,7 @@ function Student() {
   useEffect(() => {
     if (formData.school) {
       axios
-        .get(`http://localhost:5000/api/auth/filteredclasses/${formData.school}`) // Replace with your API endpoint
+        .get(`${BACKEND_URL}/api/auth/filteredclasses/${formData.school}`) // Replace with your API endpoint
         .then((response) => {
           setClasses(response.data);
         })
@@ -165,7 +166,7 @@ function Student() {
       if (isLogin) {
         // Login logic
         const response = await axios.post(
-          "http://localhost:5000/api/auth/login-student", // Use the correct endpoint for student login
+          `${BACKEND_URL}/api/auth/login-student`, // Use the correct endpoint for student login
           { email: formData.email, password: formData.password }
         );
         const Token = response.data.token;
@@ -179,7 +180,7 @@ function Student() {
         navigate("/student-dashboard"); // Navigate to the student's dashboard or appropriate page
       } else {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register-student", // Ensure the URL is correct
+        `${BACKEND_URL}/api/auth/register-student`, // Ensure the URL is correct
         formData
       );
       alert("Student registered successfully!");

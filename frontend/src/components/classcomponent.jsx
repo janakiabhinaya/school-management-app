@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { BACKEND_URL } from "../constant.js";
 
 const ClassComponent = ({ onViewClass }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +24,7 @@ const ClassComponent = ({ onViewClass }) => {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/auth/getclasses/${schoolId}`,
+        `${BACKEND_URL}/api/auth/getclasses/${schoolId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -81,7 +82,7 @@ const ClassComponent = ({ onViewClass }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/createclass",
+        `${BACKEND_URL}/api/auth/createclass`,
         {
           className,
           year: parseInt(year, 10),
@@ -122,7 +123,7 @@ const ClassComponent = ({ onViewClass }) => {
     }
 
     try {
-      await axios.delete(`http://localhost:5000/api/auth/deleteclass/${classId}`, {
+      await axios.delete(`${BACKEND_URL}/api/auth/deleteclass/${classId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -155,7 +156,7 @@ const ClassComponent = ({ onViewClass }) => {
 
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/auth/updateclass/${editingClassId}`,
+        `${BACKEND_URL}/api/auth/updateclass/${editingClassId}`,
         {
           className,
           year: parseInt(year, 10),

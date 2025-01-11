@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { BACKEND_URL } from "../constant.js";
 
 const ScheduleComponent = () => {
   const [formData, setFormData] = useState({
@@ -56,7 +57,7 @@ const ScheduleComponent = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/auth/getclasses/${schoolId}`,
+        `${BACKEND_URL}/api/auth/getclasses/${schoolId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -76,7 +77,7 @@ const ScheduleComponent = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/auth/teachers/${schoolId}`,
+        `${BACKEND_URL}/api/auth/teachers/${schoolId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -96,7 +97,7 @@ const ScheduleComponent = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/auth/schedules/${schoolId}`,
+        `${BACKEND_URL}/api/auth/schedules/${schoolId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -111,7 +112,7 @@ const ScheduleComponent = () => {
   const fetchScheduleById = async (id) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/auth/schedule/${id}`,
+        `${BACKEND_URL}/api/auth/schedule/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const schedule = response.data.schedule;
@@ -134,7 +135,7 @@ const ScheduleComponent = () => {
     }
     try {
       await axios.patch(
-        `http://localhost:5000/api/auth/schedule/${editingScheduleId}`,
+        `${BACKEND_URL}/api/auth/schedule/${editingScheduleId}`,
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -211,7 +212,7 @@ const ScheduleComponent = () => {
     try {
       // console.log("Form data being sent:", formData); // Debug log
       const response = await axios.post(
-        "http://localhost:5000/api/auth/schedule",
+        `${BACKEND_URL}/api/auth/schedule`,
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -284,7 +285,7 @@ const handleDeleteschedule = async (scheduleId) => {
   }
 
   try {
-    await axios.delete(`http://localhost:5000/api/auth/deleteschedule/${scheduleId}`, {
+    await axios.delete(`${BACKEND_URL}/api/auth/deleteschedule/${scheduleId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

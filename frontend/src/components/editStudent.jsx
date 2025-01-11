@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { BACKEND_URL } from "../constant.js";
 
 function EditStudent() {
   const { id } = useParams(); 
@@ -116,7 +117,7 @@ function EditStudent() {
   
       // Make the PATCH request with authentication headers
       await axios.patch(
-        `http://localhost:5000/api/auth/student/${id}`,
+        `${BACKEND_URL}/api/auth/student/${id}`,
         studentData,
         {
           headers: {
@@ -136,7 +137,7 @@ function EditStudent() {
     const fetchStudentData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/auth/student/${id}`  // Fetch student data by ID
+          `${BACKEND_URL}/api/auth/student/${id}`  // Fetch student data by ID
         );
         const fetchedStudent = response.data.student;
       const fetchedClasses = response.data.classes;

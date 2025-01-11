@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { BACKEND_URL } from "../constant.js";
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 
@@ -13,7 +14,7 @@ const ClassAnalytics = ({ classId, onBack }) => {
   useEffect(() => {
     const fetchClassData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/auth/classes/${classId}`);
+        const response = await axios.get(`${BACKEND_URL}/api/auth/classes/${classId}`);
         setClassData(response.data);
       } catch (err) {
         console.error("Error fetching class data:", err);

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
+import { BACKEND_URL } from "../constant.js";
 
 function Teacher() {
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ function Teacher() {
   };
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/auth/schools") // Replace with your API endpoint to fetch school names
+      .get(`${BACKEND_URL}/api/auth/schools`) // Replace with your API endpoint to fetch school names
       .then((response) => {
         setSchools(response.data);
       })
@@ -82,8 +83,8 @@ function Teacher() {
     e.preventDefault();
     if (!validateForm()) return;
     const endpoint = isLogin
-      ? "http://localhost:5000/api/auth/login-teacher" // Endpoint for teacher login
-      : "http://localhost:5000/api/auth/register-teacher"; // Endpoint for teacher registration
+      ? `${BACKEND_URL}/api/auth/login-teacher` // Endpoint for teacher login
+      : `${BACKEND_URL}/api/auth/register-teacher`; // Endpoint for teacher registration
 
     try {
       const response = await axios.post(endpoint, formData);

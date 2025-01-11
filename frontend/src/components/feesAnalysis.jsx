@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import { BACKEND_URL } from "../constant.js";
 
 const FeeAnalysisComponent = () => {
   const [view, setView] = useState("monthly"); // "monthly" or "yearly"
@@ -17,7 +17,7 @@ const FeeAnalysisComponent = () => {
   // Fetch Teachers and Students Data
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/auth/analytics/${schoolId}`, 
+      const response = await axios.get(`${BACKEND_URL}/api/auth/analytics/${schoolId}`, 
         {
         headers: { Authorization: `Bearer ${authToken}` },
       }

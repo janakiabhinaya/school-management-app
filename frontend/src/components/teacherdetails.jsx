@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../constant.js";
 function Teacherdata(){
     const [schedules, setSchedules] = useState([]);
   const [error, setError] = useState(null);
@@ -22,7 +23,7 @@ function Teacherdata(){
       };
       const handleDelete = async (teacherId) => {
         try {
-          await axios.delete(`http://localhost:5000/api/auth/deleteteacher/${teacherId}`, {
+          await axios.delete(`${BACKEND_URL}/api/auth/deleteteacher/${teacherId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -42,7 +43,7 @@ function Teacherdata(){
   
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/auth/teacher/${teacherId}`,
+            `${BACKEND_URL}/api/auth/teacher/${teacherId}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -63,7 +64,7 @@ function Teacherdata(){
     useEffect(() => {
         if (teacher && teacherId) {
           axios
-            .get(`http://localhost:5000/api/auth/getschedules/${teacherId}`)
+            .get(`${BACKEND_URL}/api/auth/getschedules/${teacherId}`)
             .then((response) => {
               setSchedules(response.data);
               console.log(schedules);

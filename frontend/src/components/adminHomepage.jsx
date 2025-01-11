@@ -8,6 +8,7 @@ import FeeAnalysisComponent from "./feesAnalysis";
 import ClassAnalytics from "./classAnalysis";
 import { BiSolidEdit } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../constant.js";
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ export const Dashboard = () => {
       const fetchProfileData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/auth/profile/${adminId}`,
+            `${BACKEND_URL}/api/auth/profile/${adminId}`,
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -70,7 +71,7 @@ export const Dashboard = () => {
     const adminId = localStorage.getItem("adminId");
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/auth/editprofile/${adminId}`,
+        `${BACKEND_URL}/api/auth/editprofile/${adminId}`,
         editData,
         {
           headers: {

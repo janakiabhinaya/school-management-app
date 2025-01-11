@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../constant.js";
 
 function RegisterStudent() {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ function RegisterStudent() {
   
     try {
       const classResponse = await axios.get(
-        `http://localhost:5000/api/auth/filteredclasses/${adminId}`,
+        `${BACKEND_URL}/api/auth/filteredclasses/${adminId}`,
       );
       setClasses(classResponse.data);
       console.log(classes);
@@ -60,7 +61,7 @@ function RegisterStudent() {
   
     try {
       const studentResponse = await axios.get(
-        `http://localhost:5000/api/auth/students/${adminId}`,
+        `${BACKEND_URL}/api/auth/students/${adminId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -87,7 +88,7 @@ function RegisterStudent() {
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/auth/class/${formData.classId}/fee`,
+          `${BACKEND_URL}/api/auth/class/${formData.classId}/fee`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -196,7 +197,7 @@ function RegisterStudent() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/student/register",
+        `${BACKEND_URL}/api/auth/student/register`,
         {
           ...formData,
           school: adminId,
@@ -246,7 +247,7 @@ function RegisterStudent() {
       return;
     }
     try {
-      await axios.delete(`http://localhost:5000/api/auth/deletestudent/${studentId}`, {
+      await axios.delete(`${BACKEND_URL}/api/auth/deletestudent/${studentId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

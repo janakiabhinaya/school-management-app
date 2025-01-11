@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../constant.js";
 
 function StudentDashboard() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ function StudentDashboard() {
         return;
       }
       const response = await axios.get(
-        `http://localhost:5000/api/auth/schedules?classId=${classId}` // Pass classId as a query param
+        `${BACKEND_URL}/api/auth/schedules?classId=${classId}` // Pass classId as a query param
       );
       const filteredSchedules = response.data; // No need to filter here as backend does that
       setSchedules(filteredSchedules);
@@ -33,7 +34,7 @@ function StudentDashboard() {
     const fetchStudentData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/auth/getstudent/${studentId}`,
+          `${BACKEND_URL}/api/auth/getstudent/${studentId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -73,7 +74,7 @@ function StudentDashboard() {
   };
   const handleDelete = async (studentId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/auth/deletestudent/${studentId}`, {
+      await axios.delete(`${BACKEND_URL}ss/api/auth/deletestudent/${studentId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

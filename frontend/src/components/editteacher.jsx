@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BACKEND_URL } from "../constant.js";
 
 function EditTeacher() {
   const { id } = useParams(); // Get teacher ID from URL
@@ -44,7 +45,7 @@ function EditTeacher() {
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/auth/teacher/${id}`,
+          `${BACKEND_URL}/api/auth/teacher/${id}`,
           {
             headers: { Authorization: `Bearer ${authToken}` },
           }
@@ -138,7 +139,7 @@ function EditTeacher() {
 
     try {
       await axios.patch(
-        `http://localhost:5000/api/auth/teacher/${id}`,
+        `${BACKEND_URL}/api/auth/teacher/${id}`,
         formData,
         {
           headers: { Authorization: `Bearer ${authToken}` },

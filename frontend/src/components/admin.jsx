@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { IoArrowBackCircleOutline } from "react-icons/io5";
+import { BACKEND_URL } from "../constant.js";
 
 function Admin() {
   const [formData, setFormData] = useState({
@@ -40,7 +41,7 @@ function Admin() {
       }
 
       try {
-        await axios.post("http://localhost:5000/api/auth/adminregister", formData);
+        await axios.post(`${BACKEND_URL}/api/auth/adminregister`, formData);
         alert("Admin created successfully!");
         setFormData({ name: "", email: "", password: "", schoolName: "" }); // Clear form fields
         setIsAdminCreated(true); // Switch to login form
@@ -55,7 +56,7 @@ function Admin() {
       }
 
       try {
-        const response = await axios.post("http://localhost:5000/api/auth/adminlogin", {
+        const response = await axios.post(`${BACKEND_URL}/api/auth/adminlogin`, {
           email: formData.email,
           password: formData.password,
         });
