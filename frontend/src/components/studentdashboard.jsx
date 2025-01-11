@@ -74,7 +74,7 @@ function StudentDashboard() {
   };
   const handleDelete = async (studentId) => {
     try {
-      await axios.delete(`${BACKEND_URL}ss/api/auth/deletestudent/${studentId}`, {
+      await axios.delete(`${BACKEND_URL}/api/auth/deletestudent/${studentId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
